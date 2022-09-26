@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import config from "../config/config.json";
 import {
-  Image,
   Keyboard,
   Text,
   TextInput,
