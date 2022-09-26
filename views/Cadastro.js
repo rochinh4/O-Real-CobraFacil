@@ -31,28 +31,25 @@ export default function Cadastro({ navigation }) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        nomeDevedor: nomeDevedor,
-        numerocobranca: numerocobranca,
-        datacobranca: datacobranca,
-        nomecobrador: nomecobrador,
-        pixcobrador: pixcobrador,
-        valordebito: valordebito,
-        nomeEmpresa: nomeEmpresa,
+        nomedevedorUser: nomeDevedor,
+        numeroCobrancaUser: numerocobranca,
+        dataCobrancaUser: datacobranca,
+        nomeCobradorUser: nomecobrador,
+        pixCobradorUser: pixcobrador,
+        valorDebitoUser: valordebito,
+        NomeEmpresaUser: nomeEmpresa,
       }),
     });
-    let ress = await reqs.json();
-    setMessage(ress);
   }
 
   return (
-    <TouchableWithoutFeedback onClick={() => Keyboard.dismiss()}>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={css.container}>
         <ImageBackground
           source={require("../assets/img/splash.png")}
           style={css.background}
         >
           <View style={css.footer1}>
-            {message && <Text>{message}</Text>}
             <TextInput
               style={css.input}
               placeholder="Nome do Devedor                                    Exemplo : Joãozinho das Neves "
@@ -67,8 +64,8 @@ export default function Cadastro({ navigation }) {
 
             <TextInput
               style={css.input}
-              placeholder="Data da Cobrança (DD/MM/AAAA) Por exemplo :              01/12/2039 "
-              onChangeText={(text) => setDatacobranca(text)}
+              placeholder="Data da Cobrança (AAAA/MM/DD) Por exemplo :             2039/12/01 "
+              onChangeText={(datetime) => setDatacobranca(datetime)}
             />
             <TextInput
               style={css.input}

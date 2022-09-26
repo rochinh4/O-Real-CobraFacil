@@ -1,45 +1,45 @@
-"use strict";
+'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("cobrançareals", {
+    await queryInterface.createTable('Users', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       },
       numero: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       chavePix: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       dataEnvio: {
-        type: Sequelize.DATE,
+        type: Sequelize.STRING
       },
       nomeDevedor: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       valorDebito: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       nomeEmpresa: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       nomeDono: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-      },
+        type: Sequelize.DATE
+      }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("cobrançareals");
-  },
+    await queryInterface.dropTable('Users');
+  }
 };
