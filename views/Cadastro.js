@@ -11,36 +11,32 @@ import {
   View,
 } from "react-native";
 import { css } from "../assets/css/Css";
+import * as yup from "yup";
+import axios, { Axios } from "axios";
 
 export default function Cadastro({ navigation }) {
-  const [nomeDevedor, setNomedevedor] = useState(null);
-  const [numerocobranca, setNumerocobranca] = useState(null);
-  const [datacobranca, setDatacobranca] = useState(null);
-  const [nomecobrador, setNomecobrador] = useState(null);
-  const [pixcobrador, setPixcobrador] = useState(null);
-  const [valordebito, setValordebito] = useState(null);
-  const [nomeEmpresa, setNomeempresa] = useState(null);
-  const [message, setMessage] = useState(null);
-
-  //Envia os dados do formulário para o backend
-  async function registerUser() {
-    let reqs = await fetch("localhost:3001/create", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        nomedevedorUser: nomeDevedor,
-        numeroCobrancaUser: numerocobranca,
-        dataCobrancaUser: datacobranca,
-        nomeCobradorUser: nomecobrador,
-        pixCobradorUser: pixcobrador,
-        valorDebitoUser: valordebito,
-        NomeEmpresaUser: nomeEmpresa,
-      }),
+  const handleClickcobranca = (values) => {
+    Axios.post("https://localhost:3001/cobranca", {
+      nomedevedorUser: values.nomedevedorUser,
+      numeroCobrancaUser: values.numeroCobrancaUser,
+      dataCobrancaUser: values.dataCobrancaUser,
+      nomeCobradorUser: values.nomeCobradorUser,
+      pixCobradorUser: values.pixCobradorUser,
+      valorDebitoUser: values.valorDebitoUser,
+      nomeEmpresaUser: values.nomeEmpresaUser,
+    }).then((response) => {
+      console.log(response);
     });
-  }
+  };
+  const validationCobranca = yup.object().shape({
+    nomedevedorUser: yup.string().required(),
+    numeroCobrancaUser: yup.string().required(),
+    dataCobrancaUser: yup.date().required(),
+    nomeCobradorUser: yup.string().required(),
+    pixCobradorUser: yup.string().required(),
+    valorDebitoUser: yup.string().required(),
+    NomeEmpresaUser: yup.string().required(),
+  });
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -49,42 +45,49 @@ export default function Cadastro({ navigation }) {
           <TextInput
             style={css.input}
             placeholder="Nome do Devedor                                    Exemplo : Joãozinho das Neves "
-            onChangeText={(text) => setNomedevedor(text)}
+            validationSchema={validationCobranca}
+            onChangeText={(text) => nomedevedorUser(text)}
           />
 
           <TextInput
             style={css.input}
             placeholder="Número de Cobrança                                         Por exemplo:5573XXXXXXXX"
-            onChangeText={(text) => setNumerocobranca(text)}
+            onChangeText={(text) => numeroCobrancaUser(text)}
+            validationSchema={validationCobranca}
           />
 
           <TextInput
             style={css.input}
             placeholder="Data da Cobrança (AAAA/MM/DD) Por exemplo :             2039/12/01 "
-            onChangeText={(datetime) => setDatacobranca(datetime)}
+            onChangeText={(date) => dataCobrancaUser(date)}
+            validationSchema={validationCobranca}
           />
           <TextInput
             style={css.input}
             placeholder="Nome do Cobrador                                               Por exemplo : Cersina do Carmo "
-            onChangeText={(text) => setNomecobrador(text)}
+            onChangeText={(text) => nomeCobradorUser(text)}
+            validationSchema={validationCobranca}
           />
           <TextInput
             style={css.input}
             placeholder="Pix do Cobrador                                                 Por exemplo :CPF XXX.XXX.XXX-XX "
-            onChangeText={(text) => setPixcobrador(text)}
+            onChangeText={(text) => pixCobradorUser(text)}
+            validationSchema={validationCobranca}
           />
           <TextInput
             style={css.input}
             placeholder="Qual o nome de sua empresa?                               Por exemplo : EngenhariaALQ.LTDA "
-            onChangeText={(text) => setNomeempresa(text)}
+            onChangeText={(text) => nomeEmpresaUser(text)}
+            validationSchema={validationCobranca}
           />
           <TextInput
             style={css.input}
             placeholder="Qual o valor que ele te deve?                            Por exemplo :R$3000.000.000 "
-            onChangeText={(text) => setValordebito(text)}
+            onChangeText={(text) => valorDebitoUser(text)}
+            validationSchema={validationCobranca}
           />
 
-          <TouchableOpacity style={css.button} onPress={registerUser}>
+          <TouchableOpacity style={css.button} onPress={handleClickcobranca}>
             <Image
               source={require("../assets/img/Logobranco.png")}
               style={css.logo}
